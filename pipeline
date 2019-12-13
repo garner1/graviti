@@ -1,0 +1,41 @@
+TBD:
+-how to use RG? sum geometric and morphological graph, and use RG to renormalize this graph towards the low energy sector.
+-community detection on the morphological + geometric graph (intead of element-wise product, use the sum)
+-community detection on the morphological graph alone
+###########################################
+# PARAMETERS:
+# H5 file
+# TIF file
+# npz output filename
+# descriptor type: rotationally invariant or not (this does not aftect the invariance of the log-forbenius metric, which is a global property of the metric,not of the descriptor)
+# filename of the report
+
+parallel --link "/usr/local/share/anaconda3/bin/python3.7 pipe1.img2descriptor.py /home/garner1/Work/dataset/tissue2graph/h5_post_watershed/iMS266_20190426_001.sub{}_Segmented_mask.h5 /home/garner1/Work/dataset/tissue2graph/tif/iMS266_20190426_001.sub{}.tif /home/garner1/Work/dataset/tissue2graph/npz/iMS266_20190426_001.sub{} covd ID52.report" ::: $(seq 575) > ID52.small_pixel_regions
+
+# Generate the spatial and morphological information per FOV
+####################################
+# COMPRESS OUTPUT FILES
+parallel "gzip {}" ::: ID52.report ID52.small_pixel_regions
+####################################
+# Parameters:
+# npz files directory
+# descriptor type
+# size in pixels of the fov
+# patient ID
+
+/usr/local/share/anaconda3/bin/python3.7 pipe2.descriptor2data.py /home/garner1/Work/dataset/tissue2graph/npz covd_ 1024 pat52
+
+# Format spatial and morphological data in a global output file pat52_covd_X-XY-RC_data.npz
+####################################
+# INPUT: data matrices X and XY and RC
+# Parameters:
+# npz file with spatial and morphological information for the patient
+# descriptor type
+# patient ID
+
+parallel "/usr/local/share/anaconda3/bin/python3.7 pipe3.data2graph.py /home/garner1/Work/pipelines/tissue2graph/pat52_covd_X-XY-RC_data covd pat52 {}" ::: spatial morphological
+
+# OUTPUT: graph as sparse weighted matrices in csr format
+# /home/garner1/Work/pipelines/tissue2graph/pat52_covd_X-XY-RC_data_XYgraph_nn??.npz
+# /home/garner1/Work/pipelines/tissue2graph/pat52_covd_X-XY-RC_data_Xgraph_nn??.npz
+####################################

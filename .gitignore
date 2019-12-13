@@ -1,0 +1,6 @@
+npz/
+img/
+*.png
+*.npz
+*.edgelist
+*.tif
