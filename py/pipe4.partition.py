@@ -14,9 +14,9 @@ from  scipy import sparse
 import numpy as np
 from module import *
 
-graph = sys.argv[1]
-data = sys.argv[2]
-partition_file = sys.argv[3] #name of the output file
+graph = sys.argv[1] # ~/Work/dataset/tissue2graph/tissues/ID52/pat52_covd_spatial_nn19.npz
+data = sys.argv[2] # ~/Work/dataset/tissue2graph/tissues/ID52/pat52_covd_X-XY-RC_data.npz
+partition_file = sys.argv[3] #ID52_spatial_partition
 
 # In[ ]:
 mat = sparse.load_npz(graph) #mat_XY_nn19.npz

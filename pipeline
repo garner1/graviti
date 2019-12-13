@@ -3,6 +3,9 @@ TBD:
 -community detection on the morphological + geometric graph (intead of element-wise product, use the sum)
 -community detection on the morphological graph alone
 ###########################################
+#TO SPLIT LARGE TIF INTO SMALLER TILES
+/usr/local/share/anaconda3/bin/python3.7 pipe0.tiff_split.py ~/Work/dataset/tissue2graph/tissues iMS337_20190709_001 ~/Work/dataset/tissue2graph/tissues/tiles 500
+###########################################
 # PARAMETERS:
 # H5 file
 # TIF file
@@ -23,7 +26,7 @@ parallel "gzip {}" ::: ID52.report ID52.small_pixel_regions
 # size in pixels of the fov
 # patient ID
 
-/usr/local/share/anaconda3/bin/python3.7 pipe2.descriptor2data.py /home/garner1/Work/dataset/tissue2graph/npz covd_ 1024 pat52
+/usr/local/share/anaconda3/bin/python3.7 pipe2.descriptor2data.py /home/garner1/Work/dataset/tissue2graph/npz covd_ 1024 ID52
 
 # Format spatial and morphological data in a global output file pat52_covd_X-XY-RC_data.npz
 ####################################
@@ -33,9 +36,17 @@ parallel "gzip {}" ::: ID52.report ID52.small_pixel_regions
 # descriptor type
 # patient ID
 
-parallel "/usr/local/share/anaconda3/bin/python3.7 pipe3.data2graph.py /home/garner1/Work/pipelines/tissue2graph/pat52_covd_X-XY-RC_data covd pat52 {}" ::: spatial morphological
+parallel "/usr/local/share/anaconda3/bin/python3.7 pipe3.data2graph.py /home/garner1/Work/pipelines/tissue2graph/pat52_covd_X-XY-RC_data covd ID52 {}" ::: spatial morphological
 
 # OUTPUT: graph as sparse weighted matrices in csr format
 # /home/garner1/Work/pipelines/tissue2graph/pat52_covd_X-XY-RC_data_XYgraph_nn??.npz
 # /home/garner1/Work/pipelines/tissue2graph/pat52_covd_X-XY-RC_data_Xgraph_nn??.npz
 ####################################
+# TO CREATE GRAPH PARTITIONS WITH LEIDEN ALGO
+/usr/local/share/anaconda3/bin/python3.7 pipe4.partition.py ~/Work/dataset/tissue2graph/tissues/ID52/pat52_covd_spatial_nn19.npz ~/Work/dataset/tissue2graph/tissues/ID52/pat52_covd_X-XY-RC_data.npz ID52_spatial_partition
+
+# TO DO RG ON 1 BIG GRAPH
+/usr/local/share/anaconda3/bin/python3.7 pipe4.RGon1graph.py  ~/Work/dataset/tissue2graph/tissues/ID52/pat52_covd_spatial_nn19.npz ~/Work/dataset/tissue2graph/tissues/ID52/pat52_covd_X-XY-RC_data.npz 0.1 restricted 52
+
+# TO DO RG ON MANY SMALL GRAPH PARTITIONS
+parallel "/usr/local/share/anaconda3/bin/python3.7 pipe4.RGonPartitions.py ~/Work/dataset/tissue2graph/tissues/ID52/pat52_covd_spatial_nn19.npz {} 0.1 ~/Work/dataset/tissue2graph/tissues/ID52/pat52_covd_X-XY-RC_data.npz ID52_spatial_partition.209.pkl 52" ::: $(seq 209)

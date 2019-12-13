@@ -20,6 +20,6 @@ im = np.asarray(Image.open(in_path+'/'+in_filename+'.tif'))
 xsize, ysize = im.shape
 for i in range(0, xsize, tile_size_x):
     for j in range(0, ysize, tile_size_y):
-        print(i//step, j//step)
+        # print(i//step, j//step)
         img = Image.fromarray(im[i:i+step,j:j+step])
         img.save(out_path+'/'+in_filename+'_r'+str(i//step)+'_c'+str(j//step)+'.tif')
