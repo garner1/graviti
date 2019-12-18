@@ -50,7 +50,7 @@ from datetime import datetime
 dateTimeObj = datetime.now()
 
 if numb_of_nuclei > 0:
-    np.savez(str(npz_file)+'_'+str(method)+'.npz',row=row,col=col,centroids=centroids,descriptors=descriptors)
+    np.savez(str(npz_file)+'_'+str(method)+'.npz',centroids=centroids,descriptors=descriptors)
 else:
     print('There are no nuclei in row='+str(row)+' and col='+str(col)+' in file: '+str(h5_file))
 

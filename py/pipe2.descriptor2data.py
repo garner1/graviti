@@ -15,18 +15,18 @@ fovsize = sys.argv[3] #1024 or 512
 ID = sys.argv[4] #patient ID
 
 filenames = str(path)+'/*'+str(method)+'*.npz'
-
+print(filenames)
 RCs=[];XYs=[];Xs=[] #as lists
 for filename in glob.glob(filenames):
     data = np.load(filename,allow_pickle=True)
     covds = data['descriptors']
-    row=data['row'];col=data['col']
+    row = int(filename.split('_r',1)[1].split('_c')[0])
+    col = int(filename.split('_r',1)[1].split('_c')[1].split('.')[0])
     XY = data['centroids']
-    print(XY.shape,covds.shape,filename)
     if XY.shape[0]>0:
         #shift the centroids to account for the fov size
         representation = np.asfarray(
-            [np.hstack(([row[0],col[0],XY[ind,0]+int(fovsize)*col[0],XY[ind,1]+int(fovsize)*row[0]], logm(covds[ind]).flatten())) for ind in range(len(covds)) if np.count_nonzero(covds[ind]) > 0 ]
+            [np.hstack(([row,col,XY[ind,0]+int(fovsize)*col,XY[ind,1]+int(fovsize)*row], logm(covds[ind]).flatten())) for ind in range(len(covds)) if np.count_nonzero(covds[ind]) > 0 ]
         )
         RCs.append(representation[:,:2]) #only rows and cols
         XYs.append(representation[:,2:4]) #only XY
