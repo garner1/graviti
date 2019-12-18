@@ -36,7 +36,7 @@ counter=0
 print('r:',row,'c:',col,'nuclei:',numb_of_nuclei)
 for region in regionprops(mask_label,intensity_image=dapi_fov):
     counter+=1
-    if ((np.count_nonzero(region.intensity_image) <= 1) or (np.count_nonzero(region.intensity_image) > 5000)) :        #at least 1 cell
+    if ((np.count_nonzero(region.intensity_image) <= 1) or (np.count_nonzero(region.intensity_image) > 2500)) :        #at least 1 cell
         print('The number of pixels is '+str(np.count_nonzero(region.intensity_image))+' in region='+str(counter))
     else:
         centroids.append(region.centroid)
