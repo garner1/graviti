@@ -7,4 +7,4 @@ The python (2.0) script uses the package histomicsTK to
 
 The input is the image file to segment: /path/to/img
 
-The output is an .npz file containg the 'X' array with nuclei centroids
+The output is an .npz file containg the 'X' array with nuclei centroids: /path/to/img.npz
