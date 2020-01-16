@@ -8,3 +8,6 @@ The python (2.0) script uses the package histomicsTK to
 The input is the image file to segment: /path/to/img
 
 The output is an .npz file containg the 'X' array with nuclei centroids: /path/to/img.npz
+
+## How to run
+``` parallel "python hematoxylin-segmentation.py {}" ::: ~/Work/dataset/iMS423_20191002_001/*.tif ```
