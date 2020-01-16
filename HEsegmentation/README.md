@@ -20,3 +20,7 @@ into a UMAP graph
 
 ## How to run
 ``` parallel "/usr/local/share/anaconda3/bin/python3.7 data2graph.py  {}" ::: ~/Work/dataset/iMS423_20191002_001/npz/*.tif.npz ```
+
+# Graph visualization
+## How to run
+``` parallel "/usr/local/share/anaconda3/bin/python3.7 graphViz.py {}_2graph.npz {}" ::: ~/Work/dataset/iMS423_20191002_001/npz/*.tif.npz ```
