@@ -17,3 +17,6 @@ The python (3.7) script data2graph.py maps
 * input: /path/to/img.npz
 into a UMAP graph
 * /path/to/img.npz_2graph_nn??.npz
+
+## How to run
+``` parallel "/usr/local/share/anaconda3/bin/python3.7 data2graph.py  {}" ::: ~/Work/dataset/iMS423_20191002_001/npz/*.tif.npz ```
