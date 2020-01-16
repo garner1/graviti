@@ -15,13 +15,15 @@ fovsize = sys.argv[3] #1024 or 512
 ID = sys.argv[4] #patient ID
 
 filenames = str(path)+'/*'+str(method)+'*.npz'
-print(filenames)
 RCs=[];XYs=[];Xs=[] #as lists
+counter=0
 for filename in glob.glob(filenames):
+    counter+=1
+    print(counter,'of',len(glob.glob(filenames)))
     data = np.load(filename,allow_pickle=True)
     covds = data['descriptors']
-    row = int(filename.split('_r',1)[1].split('_c')[0])
-    col = int(filename.split('_r',1)[1].split('_c')[1].split('.')[0])
+    row = int(filename.split('_r',1)[1].split('_c')[0]) - 1 #since rows and cols are 1-based
+    col = int(filename.split('_r',1)[1].split('_c')[1].split('.')[0]) - 1 #since rows and cols are 1-based
     XY = data['centroids']
     if XY.shape[0]>0:
         #shift the centroids to account for the fov size
