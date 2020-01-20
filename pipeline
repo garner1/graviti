@@ -13,7 +13,9 @@ TBD:
 # descriptor type: rotationally invariant or not (this does not aftect the invariance of the log-forbenius metric, which is a global property of the metric,not of the descriptor)
 # filename of the report
 
-parallel --link "/usr/local/share/anaconda3/bin/python3.7 pipe1.img2descriptor.py /home/garner1/Work/dataset/tissue2graph/h5_post_watershed/iMS266_20190426_001.sub{}_Segmented_mask.h5 /home/garner1/Work/dataset/tissue2graph/tif/iMS266_20190426_001.sub{}.tif /home/garner1/Work/dataset/tissue2graph/npz/iMS266_20190426_001.sub{} covd ID52.report" ::: $(seq 575) > ID52.small_pixel_regions
+#parallel --link "/usr/local/share/anaconda3/bin/python3.7 pipe1.img2descriptor.py /home/garner1/Work/dataset/tissue2graph/h5_post_watershed/iMS266_20190426_001.sub{}_Segmented_mask.h5 /home/garner1/Work/datase#t/tissue2graph/tif/iMS266_20190426_001.sub{}.tif /home/garner1/Work/dataset/tissue2graph/npz/iMS266_20190426_001.sub{} covd ID52.report" ::: $(seq 575) > ID52.small_pixel_regions
+
+parallel "/usr/local/share/anaconda3/bin/python3.7 pipe1.img2centroid_area_intensity.py /home/garner1/Work/dataset/tissue2graph/tissues/ID2/h5_post_watershed/{} /home/garner1/Work/dataset/tissue2graph/tissues/ID2/tif/{.}.tif /home/garner1/Work/dataset/tissue2graph/tissues/ID2/npz/{.} ID2.report" ::: $(cd /home/garner1/Work/dataset/tissue2graph/tissues/ID2/h5_post_watershed;ls *.h5)
 
 # Generate the spatial and morphological information per FOV
 ####################################
@@ -26,7 +28,9 @@ parallel "gzip {}" ::: ID52.report ID52.small_pixel_regions
 # size in pixels of the fov
 # patient ID
 
-/usr/local/share/anaconda3/bin/python3.7 pipe2.descriptor2data.py /home/garner1/Work/dataset/tissue2graph/npz covd_ 1024 ID52
+# /usr/local/share/anaconda3/bin/python3.7 pipe2.descriptor2data.py /home/garner1/Work/dataset/tissue2graph/npz covd_ 1024 ID52
+
+/usr/local/share/anaconda3/bin/python3.7 pipe2.stitching.py /home/garner1/Work/dataset/tissue2graph/tissues/ID2/npz 512 ID2
 
 # Format spatial and morphological data in a global output file pat52_covd_X-XY-RC_data.npz
 ####################################
@@ -36,7 +40,9 @@ parallel "gzip {}" ::: ID52.report ID52.small_pixel_regions
 # descriptor type
 # patient ID
 
-parallel "/usr/local/share/anaconda3/bin/python3.7 pipe3.data2graph.py /home/garner1/Work/pipelines/tissue2graph/pat52_covd_X-XY-RC_data covd ID52 {}" ::: spatial morphological
+#parallel "/usr/local/share/anaconda3/bin/python3.7 pipe3.data2graph.py /home/garner1/Work/pipelines/tissue2graph/pat52_covd_X-XY-RC_data covd ID52 {}" ::: spatial morphological
+
+/usr/local/share/anaconda3/bin/python3.7 pipe3.grapSegmentation.py /home/garner1/Work/dataset/tissue2graph/ID2_data_RC-XY-A-I ID2
 
 # OUTPUT: graph as sparse weighted matrices in csr format
 # /home/garner1/Work/pipelines/tissue2graph/pat52_covd_X-XY-RC_data_XYgraph_nn??.npz

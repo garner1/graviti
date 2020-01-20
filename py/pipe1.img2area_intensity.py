@@ -33,7 +33,8 @@ data = []    #list of centroid coordinates for sc in each fov
 counter=0
 for region in regionprops(mask_label,intensity_image=dapi_fov):
     counter+=1
-    tot_intensity = np.sum(region.intensity_image)
-    tot_nnz = np.count_nonzero(region.intensity_image)
-    print(row,col,counter,tot_intensity,tot_nnz,region.bbox_area)
+    # tot_intensity = np.sum(region.intensity_image)
+    # tot_nnz = np.count_nonzero(region.intensity_image)
+    # print(row,col,counter,tot_intensity,tot_nnz,region.bbox_area)
+    print(row,col,counter,region.filled_area)
      
