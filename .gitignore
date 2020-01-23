@@ -1,5 +1,6 @@
 npz/
 img/
+*.pdf
 *.png
 *.npz
 *.edgelist
