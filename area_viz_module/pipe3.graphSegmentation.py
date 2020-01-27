@@ -2,22 +2,17 @@
 # coding: utf-8
 
 import numpy as np
-from scipy import ndimage, sparse
-from scipy.linalg import eigh, inv, logm, norm
 import sys
-import glob
 import umap
 import warnings
 warnings.filterwarnings('ignore')
 ############################################
 # FROM DATA MATRICES X-XY_data.npz TO UMAP GRAPHS
-filename = sys.argv[1] # /home/garner1/Work/dataset/tissue2graph/ID2_data_RC-XY-A-I
+filename = sys.argv[1] # /home/garner1/Work/dataset/tissue2graph/ID2_data_RC-XY-A-I.npz
 ID = sys.argv[2] #patient ID
 
-data = np.load(filename+'.npz',allow_pickle=True)
+data = np.load(filename,allow_pickle=True)
 XY = data['XY'] # spatial coordinates of the nuclei
-A = data['A'] # area of the nuclei
-I = data['I'] # intensity of the nuclei
 
 nn = int(np.log2(XY.shape[0])) #scale the nn logarithmically in the numb of nodes to have enough density of edges for clustering
 print('UMAP with nn='+str(nn))

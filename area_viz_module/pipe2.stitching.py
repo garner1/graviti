@@ -2,8 +2,8 @@
 # coding: utf-8
 
 import numpy as np
-from scipy import ndimage, sparse
-from scipy.linalg import eigh, inv, logm, norm
+#from scipy import ndimage, sparse
+#from scipy.linalg import eigh, inv, logm, norm
 import sys
 import glob
 import warnings

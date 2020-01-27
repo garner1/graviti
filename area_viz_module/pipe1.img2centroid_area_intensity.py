@@ -3,15 +3,12 @@
 ###########################
 import h5py
 from skimage.measure import label, regionprops
-from matplotlib import pyplot as plt
 import numpy as np
-from scipy.sparse import csr_matrix,lil_matrix,coo_matrix
 import cv2
 import os
 import sys
 import csv
 import warnings
-#from module import *
 warnings.filterwarnings('ignore')
 ##################################
 h5_file = sys.argv[1]   #this file contains the segmented nuclei
