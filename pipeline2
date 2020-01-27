@@ -1,0 +1,5 @@
+parallel "/usr/local/share/anaconda3/bin/python3.7 pipe1.img2centroid_area_intensity.py /home/garner1/Work/dataset/tissue2graph/tissues/ID2/h5_post_watershed/{} /home/garner1/Work/dataset/tissue2graph/tissues/ID2/tif/{.}.tif /home/garner1/Work/dataset/tissue2graph/tissues/ID2/npz/{.} ID2.report" ::: $(cd /home/garner1/Work/dataset/tissue2graph/tissues/ID2/h5_post_watershed;ls *.h5)
+
+/usr/local/share/anaconda3/bin/python3.7 pipe2.stitching.py /home/garner1/Work/dataset/tissue2graph/tissues/ID2/npz 512 ID2
+
+/usr/local/share/anaconda3/bin/python3.7 pipe3.graphSegmentation.py /home/garner1/Work/dataset/tissue2graph/ID2_data_RC-XY-A-I ID2
