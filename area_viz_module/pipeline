@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+h5_dir=$1 # directory containing the h5 files after watershed
+tif_dir=$2 # directory containing the tif files 
+npz_dir=$3 # directory containing the output files
+id=ID2     # patient id
+report=${id}_report
+
+parallel "/usr/local/share/anaconda3/bin/python3.7 pipe1.img2centroid_area_intensity.py ${h5_dir}/{} ${tif_dir}/{.}.tif ${npz_dir}/{.} ${report}" ::: $(cd ${h5_dir}; ls *.h5)
+
+/usr/local/share/anaconda3/bin/python3.7 pipe2.stitching.py ${npz_dir} 512 ${id}
+
+/usr/local/share/anaconda3/bin/python3.7 pipe3.graphSegmentation.py /home/garner1/Work/dataset/tissue2graph/${id}_data_RC-XY-A-I ${id}

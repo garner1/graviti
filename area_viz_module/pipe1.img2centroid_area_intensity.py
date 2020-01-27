@@ -11,7 +11,7 @@ import os
 import sys
 import csv
 import warnings
-from module import *
+#from module import *
 warnings.filterwarnings('ignore')
 ##################################
 h5_file = sys.argv[1]   #this file contains the segmented nuclei
