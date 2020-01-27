@@ -13,4 +13,10 @@ Parameters:
 * id label of the WSI
 * file name of the report file
 
+How to run the code:
+```
+$ bash pipeline ~/Work/dataset/tissue2graph/tissues/ID2/{h5,tif,npz} ID2
+```
+
+
 
