@@ -3,7 +3,7 @@
 h5_dir=$1 # directory containing the h5 files after watershed with row-col tile coordinate on WSI
 tif_dir=$2 # directory containing the tif files 
 npz_dir=$3 # directory containing the output files
-id=ID2     # patient id
+id=$4     # patient id
 report=${id}_report
 
 #path2anaconda=/usr/local/share/anaconda3
