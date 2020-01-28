@@ -1,15 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
-
-# In[ ]:
-
-
 import numpy as np
-from scipy import ndimage, sparse
-from scipy.linalg import eigh, inv, logm, norm
+from scipy import sparse
 import sys
 import umap
-import glob
 import warnings
 warnings.filterwarnings('ignore')
 
