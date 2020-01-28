@@ -4,7 +4,6 @@ img/
 *.png
 *.npz
 *.edgelist
-*.tif
 *.csv
 *.txt
 *.tsv
