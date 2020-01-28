@@ -22,6 +22,6 @@ mkdir -p ${npz_dir}		# create if it does not exist
     echo Done with pipe1 &&
     ${path2anaconda}/bin/python3.7 pipe2.stitching.py ${npz_dir} 512 ${id} &&
     echo Done with pipe2 &&
-    ${path2anaconda}/bin/python3.7 pipe3.graphSegmentation.py ./${id}_data_RC-XY-A-I.npz ${id} &&
+    ${path2anaconda}/bin/python3.7 pipe3.makeGraph.py ./${id}_data_RC-XY-A-I.npz ${id} &&
     echo Done with pipe3 
 
