@@ -6,8 +6,14 @@ npz_dir=$3 # directory containing the output files
 id=$4     # patient id
 report=${id}_report
 
-#path2anaconda=/usr/local/share/anaconda3
-path2anaconda=/home/garner1/miniconda3
+if [ -d /usr/local/share/anaconda3 ]; then
+    path2anaconda=/usr/local/share/anaconda3
+    echo The python executable directory is $path2anaconda
+fi
+if [ -d /home/garner1/miniconda3 ]; then
+    path2anaconda=/home/garner1/miniconda3
+    echo The python executable directory is $path2anaconda
+fi
 
 mkdir -p ${npz_dir}		# create if it does not exist
 
