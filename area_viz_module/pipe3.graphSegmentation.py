@@ -5,6 +5,7 @@ import numpy as np
 import sys
 import umap
 import warnings
+from scipy import sparse
 warnings.filterwarnings('ignore')
 ############################################
 # FROM DATA MATRICES X-XY_data.npz TO UMAP GRAPHS
