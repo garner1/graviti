@@ -2,8 +2,6 @@
 # coding: utf-8
 
 import numpy as np
-#from scipy import ndimage, sparse
-#from scipy.linalg import eigh, inv, logm, norm
 import sys
 import glob
 import warnings
@@ -18,7 +16,7 @@ RCs=[];As=[];Is=[];XYs=[] #as lists
 counter=0
 for filename in glob.glob(filenames):
     counter+=1
-    print(counter,'of',len(glob.glob(filenames)))
+    # print(counter,'of',len(glob.glob(filenames)))
     row = int(filename.split('_r',1)[1].split('_c')[0]) - 1 #since rows and cols are 1-based
     col = int(filename.split('_r',1)[1].split('_c')[1].split('.')[0]) - 1 #since rows and cols are 1-based
     data = np.load(filename,allow_pickle=True)
