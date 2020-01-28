@@ -18,12 +18,12 @@ fi
 mkdir -p ${npz_dir}		# create if it does not exist
 
 [ -d ${h5_dir} ] && [ -d ${tif_dir} ] && [ -d ${npz_dir} ] &&
-    # parallel "${path2anaconda}/bin/python3.7 pipe1.img2centroid_area_intensity.py ${h5_dir}/{} ${tif_dir}/{.}.tif ${npz_dir}/{.} ${report}" ::: $(cd ${h5_dir}; ls *.h5) &&
-    # echo Done with pipe1 &&
-    # ${path2anaconda}/bin/python3.7 pipe2.stitching.py ${npz_dir} 512 ${id} &&
-    # echo Done with pipe2 &&
-    # ${path2anaconda}/bin/python3.7 pipe3.makeGraph.py ./${id}_data.npz ${id} &&
-    # echo Done with pipe3 &&
+    parallel "${path2anaconda}/bin/python3.7 pipe1.img2features.py ${h5_dir}/{} ${tif_dir}/{.}.tif ${npz_dir}/{.} ${report}" ::: $(cd ${h5_dir}; ls *.h5) &&
+    echo Done with pipe1 &&
+    ${path2anaconda}/bin/python3.7 pipe2.stitching.py ${npz_dir} 512 ${id} &&
+    echo Done with pipe2 &&
+    ${path2anaconda}/bin/python3.7 pipe3.makeGraph.py ./${id}_data.npz ${id} &&
+    echo Done with pipe3 &&
     parallel "${path2anaconda}/bin/python3.7 pipe4.drawGraph.py ${id}_data.npz ${id}_nn15.npz {} 100" ::: area intensity perimeter eccentricity solidity &&
     echo Done with pipe4
 
