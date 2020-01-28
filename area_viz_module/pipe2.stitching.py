@@ -36,6 +36,6 @@ RC = np.vstack(RCs) # the full RC data as array
 XY = np.vstack(XYs) # the full XY data as array
 A = np.vstack(As) # the full area data as array
 I = np.vstack(Is) # the full intensity data as array
-np.savez('/home/garner1/Work/dataset/tissue2graph/'+str(ID)+'_'+'data_RC-XY-A-I.npz',RC=RC,XY=XY,A=A,I=I)
+np.savez('./'+str(ID)+'_'+'data_RC-XY-A-I.npz',RC=RC,XY=XY,A=A,I=I)
 
 
