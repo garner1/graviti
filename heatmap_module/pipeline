@@ -24,6 +24,6 @@ mkdir -p ${npz_dir}		# create if it does not exist
     echo Done with pipe2 &&
     ${path2anaconda}/bin/python3.7 pipe3.makeGraph.py ./${id}_data.npz ${id} &&
     echo Done with pipe3 &&
-    parallel "${path2anaconda}/bin/python3.7 pipe4.drawGraph.py ${id}_data.npz ${id}_nn15.npz {} 100" ::: area intensity perimeter eccentricity solidity &&
+    parallel "${path2anaconda}/bin/python3.7 pipe4.drawGraph.py ${id}_data.npz ${id}_graph.npz {} 100" ::: area intensity perimeter eccentricity solidity &&
     echo Done with pipe4
 

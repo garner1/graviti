@@ -30,5 +30,5 @@ mat_XY = umap.umap_.fuzzy_simplicial_set(
         local_connectivity=2.0,
         verbose=False
     )
-sparse.save_npz(str(ID)+'_nn'+str(nn)+'.npz',mat_XY)
+sparse.save_npz(str(ID)+'_graph.npz',mat_XY)
 
