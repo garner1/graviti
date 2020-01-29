@@ -24,9 +24,14 @@ mkdir -p ${npz_dir}		# create if it does not exist
     # echo Done with pipe2 &&
     # ${path2anaconda}/bin/python3.7 pipe3.makeGraph.py ./${id}_data.npz ${id} &&
     # echo Done with pipe3 &&
-    parallel "${path2anaconda}/bin/python3.7 pipe4.walk.py ./npz/${id}_data.npz ./npz/${id}_graph.npz {} 1000 ${id}" ::: area intensity perimeter eccentricity solidity &&
-    echo Done with pipe4 &&
-    parallel "${path2anaconda}/bin/python3.7 pipe5.drawHeatMap.py ./npy/${id}-{1}-walkhistory.npy ./npz/${id}_data.npz {1} {2} ${id} {3}" ::: area intensity perimeter eccentricity solidity ::: $(seq 100 100 1000) ::: linear percentiles
+    # parallel "${path2anaconda}/bin/python3.7 pipe4.walk.py ./npz/${id}_data.npz ./npz/${id}_graph.npz {} 1000 ${id}" ::: area intensity perimeter eccentricity solidity &&
+    # echo Done with pipe4 &&
+    for steps in 1 10 100 1000;
+    do
+	echo ${steps}
+	parallel "${path2anaconda}/bin/python3.7 pipe5.drawHeatMap.py ./npy/${id}-{1}-walkhistory.npy ./npz/${id}_data.npz {1} ${steps} ${id} {2} linear" ::: area intensity perimeter eccentricity solidity ::: linear percentiles
+	parallel "${path2anaconda}/bin/python3.7 pipe5.drawHeatMap.py ./npy/${id}-{1}-walkhistory.npy ./npz/${id}_data.npz {1} ${steps} ${id} {2} logarithmic" ::: area intensity perimeter eccentricity solidity ::: linear percentiles
+    done
     echo Done with pipe5
 
 

@@ -19,9 +19,15 @@ feature = sys.argv[3] # one of (area,intensity,perimeter,eccentricity,solidity)
 steps = int(sys.argv[4]) # correspond to the size of the nuclei ensemble average: greater the #steps the larger the graph-neighbor-window over which the mean is taken
 ID = sys.argv[5] #patient ID
 modality = sys.argv[6] #linear or percentiles division of the feature range
+scale = sys.argv[7] #linear of logarithmic scale of the attribute values
 
 history = np.load(npyfilename,allow_pickle=True)
-attribute = np.log2(np.mean(history[:,:steps],axis=1))
+
+if scale == 'linear':
+    attribute = np.mean(history[:,:steps],axis=1)
+elif scale == 'logarithmic':
+    attribute = np.log2(np.mean(history[:,:steps],axis=1))
+
 ##########################################                       
 # Fit a normal distribution to the data:
 mu, std = norm.fit(attribute) # you could also fit to a lognorma the original data
@@ -34,7 +40,7 @@ p = norm.pdf(x, mu, std)
 plt.plot(x, p, 'k', linewidth=2)
 title = "Fit results: mu = %.2f,  std = %.2f" % (mu, std)
 plt.title(title)
-plt.savefig("./png/"+str(ID)+"_distro-"+str(feature)+"-nn"+str(steps)+".png") # save as png
+plt.savefig("./png/"+str(ID)+"_distro-"+str(feature)+"-"+str(scale)+"_scale"+"-nn"+str(steps)+".png") # save as png
 plt.close()
 ###########################################
 
@@ -45,9 +51,9 @@ G.add_nodes_from(range(len(attribute)))
 
 # color attribute based on percentiles, deciles or quartiles ...
 if modality == 'linear':
-    node_color = np.interp(attribute, (attribute.min(), attribute.max()), (0, +100))
+    node_color = np.interp(attribute, (attribute.min(), attribute.max()), (0, +10))
 elif modality == 'percentiles':
-    node_color = pd.qcut(attribute, 100, labels=False)
+    node_color = pd.qcut(attribute, 10, labels=False)
 
 # draw graph with node attribute color
 sns.set(style='white', rc={'figure.figsize':(50,50)})
@@ -55,6 +61,6 @@ nx.draw_networkx_nodes(G, pos, alpha=0.5,node_color=node_color, node_size=2,cmap
 
 print('saving graph')
 plt.axis('off')
-plt.savefig("./png/"+str(ID)+"_heatmap-"+str(feature)+"-"+str(modality)+"-nn"+str(steps)+".png") # save as png
+plt.savefig("./png/"+str(ID)+"_heatmap-"+str(feature)+"-"+str(scale)+"_scale""-"+str(modality)+"-nn"+str(steps)+".png") # save as png
 plt.close()
 
