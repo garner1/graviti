@@ -15,6 +15,8 @@ warnings.filterwarnings('ignore')
 
 filename = sys.argv[1] #'/home/garner1/Work/dataset/tissue2graph/ID57_data_RC-XY-A-I.npz'
 mat_XY = sparse.load_npz(sys.argv[2]) #'./ID57_nn20.npz'
+steps = sys.argv[4] #number of steps of the random walker 
+ID = sys.argv[5] #patient ID
 
 data = np.load(filename,allow_pickle=True)
 XY = data['XY'] # spatial coordinates of the nuclei
@@ -38,7 +40,7 @@ elif sys.argv[3] == 'solidity':
     vec = S
     
 history = vec
-nn = int(sys.argv[4])
+nn = int(steps)
 for counter in range(nn):
     vec = SS.dot(vec)
     history = np.hstack((history,vec)) 
@@ -56,7 +58,7 @@ p = norm.pdf(x, mu, std)
 plt.plot(x, p, 'k', linewidth=2)
 title = "Fit results: mu = %.2f,  std = %.2f" % (mu, std)
 plt.title(title)
-plt.savefig("distro-"+str(sys.argv[3])+".png") # save as png
+plt.savefig("./png/distro-"+str(sys.argv[3])+".png") # save as png
 plt.close()
 ###########################################
 
@@ -77,6 +79,6 @@ nx.draw_networkx_nodes(G, pos, alpha=0.5,node_color=node_color, node_size=2,cmap
 
 print('saving graph')
 plt.axis('off')
-plt.savefig("graph-"+str(sys.argv[3])+"-heatmap.png") # save as png
+plt.savefig("./png/"+str(ID)+"_graph-"+str(sys.argv[3])+"-heatmap.png") # save as png
 plt.close()
 

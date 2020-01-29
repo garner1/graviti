@@ -1,5 +1,8 @@
 npz/
 img/
+heatmap_module/npy
+heatmap_module/npz
+heatmap_module/png
 *.pdf
 *.png
 *.npz
